@@ -247,7 +247,8 @@ h1 {
 
 form {
   display: flex;
-  gap: 0.65rem;
+  flex-direction: column;
+  gap: 0.55rem;
 }
 
 #answer {
@@ -268,13 +269,17 @@ form {
 button {
   border: 0;
   border-radius: 12px;
-  padding: 0 1rem;
+  padding: 0.8rem 1rem;
   font-family: inherit;
   font-weight: 800;
   color: #fff;
   background: linear-gradient(135deg, #ff8a3d, #ff6f3c);
   cursor: pointer;
   transition: transform 140ms ease, filter 140ms ease;
+}
+
+#answer-form button[type="submit"] {
+  width: 100%;
 }
 
 button:hover {
@@ -316,9 +321,22 @@ button:disabled {
 }
 
 .feedback {
-  min-height: 1.35rem;
-  margin: 0.85rem 0 0;
+  margin: 0;
   font-weight: 700;
+}
+
+.overlay-feedback {
+  position: absolute;
+  left: 50%;
+  bottom: 0.85rem;
+  transform: translateX(-50%);
+  max-width: calc(100% - 1.25rem);
+  padding: 0.45rem 0.7rem;
+  border-radius: 12px;
+  background: #ffffffde;
+  text-align: center;
+  line-height: 1.25;
+  box-shadow: 0 6px 14px #16223a1a;
 }
 
 .feedback[data-state="success"] {
@@ -374,10 +392,6 @@ button:disabled {
 @media (max-width: 560px) {
   .table-options {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  form {
-    flex-direction: column;
   }
 
   form button {

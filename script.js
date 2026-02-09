@@ -18,6 +18,7 @@ const TABLE_MIN = 1;
 const TABLE_MAX = 12;
 const TABLE_STORAGE_KEY = "tables-de-multiplications:selectedTables";
 const TABLE_PICKER_COLLAPSED_KEY = "tables-de-multiplications:tablePickerCollapsed";
+const FEEDBACK_DISPLAY_MS = 2100;
 
 const score = {
   total: 0,
@@ -274,7 +275,7 @@ form.addEventListener("submit", (event) => {
     waitingNext = false;
     setFeedback("", "neutral");
     setQuestion();
-  }, 1400);
+  }, FEEDBACK_DISPLAY_MS);
 });
 
 buildTableSelector();
