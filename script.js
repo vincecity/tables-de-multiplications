@@ -12,6 +12,7 @@ const clearAllButton = document.querySelector("#clear-all");
 
 const TABLE_MIN = 1;
 const TABLE_MAX = 12;
+const TABLE_STORAGE_KEY = "tables-de-multiplications:selectedTables";
 
 const score = {
   total: 0,
@@ -36,8 +37,40 @@ function randomTable() {
   return options[randomBetween(0, options.length - 1)];
 }
 
+function loadSavedTables() {
+  try {
+    const raw = localStorage.getItem(TABLE_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      return null;
+    }
+
+    const cleaned = parsed
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value >= TABLE_MIN && value <= TABLE_MAX);
+
+    return new Set(cleaned);
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveSelectedTables() {
+  try {
+    localStorage.setItem(TABLE_STORAGE_KEY, JSON.stringify(Array.from(selectedTables)));
+  } catch (error) {
+    // Ignore storage errors (private mode, quota, etc.) and keep app usable.
+  }
+}
+
 function buildTableSelector() {
   const fragment = document.createDocumentFragment();
+  const savedTables = loadSavedTables();
+  const hasSavedSelection = savedTables instanceof Set;
 
   for (let value = TABLE_MIN; value <= TABLE_MAX; value += 1) {
     const label = document.createElement("label");
@@ -46,7 +79,7 @@ function buildTableSelector() {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.value = String(value);
-    checkbox.checked = true;
+    checkbox.checked = hasSavedSelection ? savedTables.has(value) : true;
 
     const text = document.createElement("span");
     text.textContent = String(value);
@@ -116,9 +149,10 @@ function refreshStats() {
   accuracy.textContent = `${ratio}%`;
 }
 
-function handleTableChange() {
+function handleTableChange(announce = true) {
   stopPendingQuestion();
   updateSelectedTables();
+  saveSelectedTables();
 
   if (selectedTables.size === 0) {
     questionText.textContent = "Choisis au moins une table.";
@@ -131,7 +165,11 @@ function handleTableChange() {
 
   answerInput.disabled = false;
   submitButton.disabled = false;
-  setFeedback("Sélection mise à jour.", "neutral");
+  if (announce) {
+    setFeedback("Sélection mise à jour.", "neutral");
+  } else {
+    setFeedback("", "neutral");
+  }
   setQuestion();
 }
 
@@ -185,5 +223,13 @@ form.addEventListener("submit", (event) => {
 });
 
 buildTableSelector();
-setQuestion();
 refreshStats();
+handleTableChange(false);
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {
+      // Silent failure: app should still work online without SW.
+    });
+  });
+}

@@ -76,8 +76,15 @@ h1 {
 }
 
 .subtitle {
-  margin: 0.6rem 0 1.3rem;
+  margin: 0.6rem 0 0.25rem;
   font-size: 0.98rem;
+}
+
+.install-hint {
+  margin: 0 0 1.3rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d5884;
 }
 
 .table-picker {
