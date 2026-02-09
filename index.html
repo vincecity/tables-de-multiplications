@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Révision des tables de multiplication</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chango&family=Manrope:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <p class="eyebrow">Révision express</p>
+      <h1>Tables de multiplication</h1>
+      <p class="subtitle">De 1 à 12, une question à la fois.</p>
+
+      <section class="table-picker" aria-label="Sélection des tables">
+        <div class="table-picker-head">
+          <p class="label">Tables à réviser</p>
+          <div class="table-picker-actions">
+            <button id="select-all" class="ghost-btn" type="button">Tout</button>
+            <button id="clear-all" class="ghost-btn" type="button">Aucune</button>
+          </div>
+        </div>
+        <div id="table-options" class="table-options"></div>
+      </section>
+
+      <section class="quiz-card" aria-live="polite">
+        <p class="label">Question</p>
+        <p id="question" class="question">3 × 7 = ?</p>
+
+        <form id="answer-form" autocomplete="off">
+          <label for="answer" class="sr-only">Votre réponse</label>
+          <input
+            id="answer"
+            name="answer"
+            type="number"
+            inputmode="numeric"
+            placeholder="Ta réponse"
+            required
+          />
+          <button type="submit">Valider</button>
+        </form>
+
+        <p id="feedback" class="feedback" role="status"></p>
+      </section>
+
+      <section class="stats" aria-label="Statistiques">
+        <div>
+          <span id="correct-count">0</span>
+          <small>Bonnes réponses</small>
+        </div>
+        <div>
+          <span id="total-count">0</span>
+          <small>Questions</small>
+        </div>
+        <div>
+          <span id="accuracy">0%</span>
+          <small>Précision</small>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
