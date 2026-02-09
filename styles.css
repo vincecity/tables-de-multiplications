@@ -171,10 +171,12 @@ h1 {
 }
 
 .quiz-card {
+  position: relative;
   background: #f8fbff;
   border: 2px solid #dce7f5;
   border-radius: 20px;
   padding: 1rem;
+  overflow: hidden;
 }
 
 .label {
@@ -195,10 +197,16 @@ h1 {
 }
 
 .unicorn-stage {
-  position: relative;
-  height: 150px;
-  margin: 0.2rem 0 0.8rem;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0.8rem;
+  background: linear-gradient(180deg, #f8fbfff0, #f8fbffde);
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+  z-index: 3;
 }
 
 .unicorn-stage[data-mood="neutral"] .unicorn {
@@ -210,12 +218,17 @@ h1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: min(200px, 70%);
-  max-height: 100%;
+  width: min(220px, 78%);
+  max-height: 92%;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.98);
   transition: opacity 220ms ease, transform 220ms ease;
   pointer-events: none;
+}
+
+.unicorn-stage[data-mood="happy"],
+.unicorn-stage[data-mood="sad"] {
+  opacity: 1;
 }
 
 .unicorn-stage[data-mood="happy"] .unicorn-happy,
@@ -385,27 +398,27 @@ button:disabled {
 
 @keyframes bounce-happy {
   0% {
-    transform: translateY(10px) scale(0.93);
+    transform: translate(-50%, -50%) translateY(10px) scale(0.93);
   }
   60% {
-    transform: translateY(-4px) scale(1.02);
+    transform: translate(-50%, -50%) translateY(-4px) scale(1.02);
   }
   100% {
-    transform: translateY(0) scale(1);
+    transform: translate(-50%, -50%) translateY(0) scale(1);
   }
 }
 
 @keyframes sigh-sad {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translate(-50%, -50%) translateY(0) rotate(0deg);
   }
   40% {
-    transform: translateY(2px) rotate(-2deg);
+    transform: translate(-50%, -50%) translateY(2px) rotate(-2deg);
   }
   70% {
-    transform: translateY(0) rotate(2deg);
+    transform: translate(-50%, -50%) translateY(0) rotate(2deg);
   }
   100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translate(-50%, -50%) translateY(0) rotate(0deg);
   }
 }
