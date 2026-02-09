@@ -11,6 +11,7 @@ const selectAllButton = document.querySelector("#select-all");
 const clearAllButton = document.querySelector("#clear-all");
 const tablePickerToggle = document.querySelector("#toggle-table-picker");
 const tablePickerContent = document.querySelector("#table-picker-content");
+const hasCollapsiblePicker = Boolean(tablePickerToggle && tablePickerContent);
 
 const TABLE_MIN = 1;
 const TABLE_MAX = 12;
@@ -88,6 +89,10 @@ function loadTablePickerExpanded() {
 }
 
 function setTablePickerExpanded(isExpanded, store = true) {
+  if (!hasCollapsiblePicker) {
+    return;
+  }
+
   tablePickerToggle.setAttribute("aria-expanded", String(isExpanded));
   tablePickerContent.hidden = !isExpanded;
 
@@ -209,10 +214,12 @@ function handleTableChange(announce = true) {
 tableOptions.addEventListener("change", handleTableChange);
 selectAllButton.addEventListener("click", () => applyAllSelections(true));
 clearAllButton.addEventListener("click", () => applyAllSelections(false));
-tablePickerToggle.addEventListener("click", () => {
-  const isExpanded = tablePickerToggle.getAttribute("aria-expanded") === "true";
-  setTablePickerExpanded(!isExpanded);
-});
+if (hasCollapsiblePicker) {
+  tablePickerToggle.addEventListener("click", () => {
+    const isExpanded = tablePickerToggle.getAttribute("aria-expanded") === "true";
+    setTablePickerExpanded(!isExpanded);
+  });
+}
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();

@@ -1,4 +1,4 @@
-const CACHE_NAME = "tables-multiplication-v1";
+const CACHE_NAME = "tables-multiplication-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -35,9 +35,53 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  const requestUrl = new URL(event.request.url);
+  const isSameOrigin = requestUrl.origin === self.location.origin;
+
   if (event.request.mode === "navigate") {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match("./index.html"))
+      fetch(event.request)
+        .then((networkResponse) => {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put("./index.html", responseClone);
+          });
+          return networkResponse;
+        })
+        .catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
+
+  if (isSameOrigin) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          const isCacheable =
+            networkResponse &&
+            networkResponse.status === 200 &&
+            networkResponse.type === "basic";
+
+          if (isCacheable) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+
+          return networkResponse;
+        })
+        .catch(() => {
+          if (event.request.destination === "document") {
+            return caches.match("./index.html");
+          }
+          return caches.match(event.request).then((cachedResponse) => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            return Response.error();
+          });
+        })
     );
     return;
   }
