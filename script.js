@@ -9,10 +9,13 @@ const submitButton = form.querySelector('button[type="submit"]');
 const tableOptions = document.querySelector("#table-options");
 const selectAllButton = document.querySelector("#select-all");
 const clearAllButton = document.querySelector("#clear-all");
+const tablePickerToggle = document.querySelector("#toggle-table-picker");
+const tablePickerContent = document.querySelector("#table-picker-content");
 
 const TABLE_MIN = 1;
 const TABLE_MAX = 12;
 const TABLE_STORAGE_KEY = "tables-de-multiplications:selectedTables";
+const TABLE_PICKER_COLLAPSED_KEY = "tables-de-multiplications:tablePickerCollapsed";
 
 const score = {
   total: 0,
@@ -64,6 +67,36 @@ function saveSelectedTables() {
     localStorage.setItem(TABLE_STORAGE_KEY, JSON.stringify(Array.from(selectedTables)));
   } catch (error) {
     // Ignore storage errors (private mode, quota, etc.) and keep app usable.
+  }
+}
+
+function loadTablePickerExpanded() {
+  try {
+    const storedValue = localStorage.getItem(TABLE_PICKER_COLLAPSED_KEY);
+    if (storedValue === "true") {
+      return false;
+    }
+
+    if (storedValue === "false") {
+      return true;
+    }
+
+    return !window.matchMedia("(max-width: 560px)").matches;
+  } catch (error) {
+    return true;
+  }
+}
+
+function setTablePickerExpanded(isExpanded, store = true) {
+  tablePickerToggle.setAttribute("aria-expanded", String(isExpanded));
+  tablePickerContent.hidden = !isExpanded;
+
+  if (store) {
+    try {
+      localStorage.setItem(TABLE_PICKER_COLLAPSED_KEY, String(!isExpanded));
+    } catch (error) {
+      // Ignore storage errors and keep UI functional.
+    }
   }
 }
 
@@ -176,6 +209,10 @@ function handleTableChange(announce = true) {
 tableOptions.addEventListener("change", handleTableChange);
 selectAllButton.addEventListener("click", () => applyAllSelections(true));
 clearAllButton.addEventListener("click", () => applyAllSelections(false));
+tablePickerToggle.addEventListener("click", () => {
+  const isExpanded = tablePickerToggle.getAttribute("aria-expanded") === "true";
+  setTablePickerExpanded(!isExpanded);
+});
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -225,6 +262,7 @@ form.addEventListener("submit", (event) => {
 buildTableSelector();
 refreshStats();
 handleTableChange(false);
+setTablePickerExpanded(loadTablePickerExpanded(), false);
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {

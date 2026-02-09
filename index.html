@@ -27,13 +27,24 @@
 
       <section class="table-picker" aria-label="Sélection des tables">
         <div class="table-picker-head">
-          <p class="label">Tables à réviser</p>
+          <button
+            id="toggle-table-picker"
+            class="table-picker-toggle"
+            type="button"
+            aria-expanded="true"
+            aria-controls="table-picker-content"
+          >
+            <span class="label">Tables à réviser</span>
+            <span id="table-picker-chevron" class="table-picker-chevron" aria-hidden="true">▾</span>
+          </button>
+        </div>
+        <div id="table-picker-content" class="table-picker-content">
           <div class="table-picker-actions">
             <button id="select-all" class="ghost-btn" type="button">Tout</button>
             <button id="clear-all" class="ghost-btn" type="button">Aucune</button>
           </div>
+          <div id="table-options" class="table-options"></div>
         </div>
-        <div id="table-options" class="table-options"></div>
       </section>
 
       <section class="quiz-card" aria-live="polite">
