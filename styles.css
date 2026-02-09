@@ -59,32 +59,11 @@ body::after {
   animation: rise 550ms ease-out both;
 }
 
-.eyebrow {
-  margin: 0;
-  color: var(--accent-2);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.72rem;
-}
-
 h1 {
-  margin: 0.3rem 0 0;
+  margin: 0 0 1rem;
   font-family: "Chango", fantasy;
   line-height: 1.18;
   font-size: clamp(1.6rem, 3.4vw, 2.25rem);
-}
-
-.subtitle {
-  margin: 0.6rem 0 0.25rem;
-  font-size: 0.98rem;
-}
-
-.install-hint {
-  margin: 0 0 1.3rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #3d5884;
 }
 
 .table-picker {
@@ -208,9 +187,49 @@ h1 {
 }
 
 .question {
-  margin: 0.35rem 0 1rem;
-  font-size: clamp(1.65rem, 5vw, 2.4rem);
+  margin: 0.35rem 0 0.45rem;
+  font-size: clamp(2.3rem, 10vw, 4.4rem);
   font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.unicorn-stage {
+  position: relative;
+  height: 150px;
+  margin: 0.2rem 0 0.8rem;
+  overflow: hidden;
+}
+
+.unicorn-stage[data-mood="neutral"] .unicorn {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.98);
+}
+
+.unicorn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(200px, 70%);
+  max-height: 100%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.98);
+  transition: opacity 220ms ease, transform 220ms ease;
+  pointer-events: none;
+}
+
+.unicorn-stage[data-mood="happy"] .unicorn-happy,
+.unicorn-stage[data-mood="sad"] .unicorn-sad {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.unicorn-stage[data-mood="happy"] .unicorn-happy {
+  animation: bounce-happy 520ms ease;
+}
+
+.unicorn-stage[data-mood="sad"] .unicorn-sad {
+  animation: sigh-sad 520ms ease;
 }
 
 form {
@@ -361,5 +380,32 @@ button:disabled {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bounce-happy {
+  0% {
+    transform: translateY(10px) scale(0.93);
+  }
+  60% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sigh-sad {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  40% {
+    transform: translateY(2px) rotate(-2deg);
+  }
+  70% {
+    transform: translateY(0) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
   }
 }

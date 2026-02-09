@@ -20,10 +20,7 @@
   </head>
   <body>
     <main class="app">
-      <p class="eyebrow">Révision express</p>
       <h1>Tables de multiplication</h1>
-      <p class="subtitle">De 1 à 12, une question à la fois.</p>
-      <p class="install-hint">iPhone: Safari → Partager → Sur l’écran d’accueil.</p>
 
       <section class="table-picker" aria-label="Sélection des tables">
         <div class="table-picker-head">
@@ -50,6 +47,48 @@
       <section class="quiz-card" aria-live="polite">
         <p class="label">Question</p>
         <p id="question" class="question">3 × 7 = ?</p>
+        <div class="unicorn-stage" aria-hidden="true">
+          <svg id="unicorn-happy" class="unicorn unicorn-happy" viewBox="0 0 220 170" role="img">
+            <defs>
+              <linearGradient id="maneHappy" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#ff7eb6" />
+                <stop offset="1" stop-color="#8fd6ff" />
+              </linearGradient>
+            </defs>
+            <circle cx="110" cy="92" r="56" fill="#ffffff" stroke="#ccd9f4" stroke-width="4" />
+            <ellipse cx="68" cy="96" rx="18" ry="24" fill="#ffffff" stroke="#ccd9f4" stroke-width="4" />
+            <ellipse cx="152" cy="96" rx="18" ry="24" fill="#ffffff" stroke="#ccd9f4" stroke-width="4" />
+            <path d="M70 67c18-33 69-40 96-15-2 21-16 33-37 38-22 5-44-5-59-23z" fill="url(#maneHappy)" />
+            <path d="M109 15l12 28h-24z" fill="#ffd66e" stroke="#f2b438" stroke-width="3" />
+            <circle cx="90" cy="90" r="6" fill="#1f2f52" />
+            <circle cx="130" cy="90" r="6" fill="#1f2f52" />
+            <path d="M89 115c8 10 34 10 42 0" fill="none" stroke="#ff5f9a" stroke-width="5" stroke-linecap="round" />
+            <circle cx="76" cy="106" r="7" fill="#ffc2da" />
+            <circle cx="144" cy="106" r="7" fill="#ffc2da" />
+            <circle cx="38" cy="43" r="5" fill="#ffd66e" />
+            <circle cx="181" cy="45" r="5" fill="#ffd66e" />
+          </svg>
+          <svg id="unicorn-sad" class="unicorn unicorn-sad" viewBox="0 0 220 170" role="img">
+            <defs>
+              <linearGradient id="maneSad" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#9ab4ff" />
+                <stop offset="1" stop-color="#e2b8ff" />
+              </linearGradient>
+            </defs>
+            <circle cx="110" cy="92" r="56" fill="#ffffff" stroke="#ccd9f4" stroke-width="4" />
+            <ellipse cx="68" cy="96" rx="18" ry="24" fill="#ffffff" stroke="#ccd9f4" stroke-width="4" />
+            <ellipse cx="152" cy="96" rx="18" ry="24" fill="#ffffff" stroke="#ccd9f4" stroke-width="4" />
+            <path d="M70 67c18-33 69-40 96-15-2 21-16 33-37 38-22 5-44-5-59-23z" fill="url(#maneSad)" />
+            <path d="M109 15l12 28h-24z" fill="#ffd66e" stroke="#f2b438" stroke-width="3" />
+            <path d="M84 89c3-6 9-6 12 0" fill="none" stroke="#1f2f52" stroke-width="3" stroke-linecap="round" />
+            <path d="M124 89c3-6 9-6 12 0" fill="none" stroke="#1f2f52" stroke-width="3" stroke-linecap="round" />
+            <path d="M89 121c8-8 34-8 42 0" fill="none" stroke="#6c7fae" stroke-width="5" stroke-linecap="round" />
+            <ellipse cx="83" cy="100" rx="3" ry="6" fill="#8dc8ff" />
+            <ellipse cx="137" cy="100" rx="3" ry="6" fill="#8dc8ff" />
+            <circle cx="42" cy="48" r="4" fill="#b9c6e9" />
+            <circle cx="176" cy="42" r="4" fill="#b9c6e9" />
+          </svg>
+        </div>
 
         <form id="answer-form" autocomplete="off">
           <label for="answer" class="sr-only">Votre réponse</label>

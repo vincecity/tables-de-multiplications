@@ -12,6 +12,7 @@ const clearAllButton = document.querySelector("#clear-all");
 const tablePickerToggle = document.querySelector("#toggle-table-picker");
 const tablePickerContent = document.querySelector("#table-picker-content");
 const hasCollapsiblePicker = Boolean(tablePickerToggle && tablePickerContent);
+const unicornStage = document.querySelector(".unicorn-stage");
 
 const TABLE_MIN = 1;
 const TABLE_MAX = 12;
@@ -178,6 +179,16 @@ function setQuestion() {
 function setFeedback(message, state) {
   feedback.textContent = message;
   feedback.dataset.state = state;
+
+  if (unicornStage) {
+    if (state === "success") {
+      unicornStage.dataset.mood = "happy";
+    } else if (state === "error") {
+      unicornStage.dataset.mood = "sad";
+    } else {
+      unicornStage.dataset.mood = "neutral";
+    }
+  }
 }
 
 function refreshStats() {
